@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ตลาดกาแฟแสนสนุก · วิธีเล่นแบบอนิเมชัน</title>
+<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="/static/tutorial.css">
+</head>
+<body>
+<div class="topbar"><div class="in">
+  <div class="brand"><i>🎬</i>วิธีเล่นแบบอนิเมชัน</div>
+  <div class="spacer"></div>
+  <a class="guidebtn" href="/guide" style="text-decoration:none;background:var(--paper);color:var(--ink)">📖<span> คู่มือแบบอ่าน</span></a>
+  <a class="guidebtn" href="/" style="text-decoration:none">▶<span> ไปเล่นเกม</span></a>
+</div></div>
+
+<div class="wrap">
+  <section class="panel">
+    <header>
+      <div><h1>ตลาดกาแฟแสนสนุก</h1><p class="muted">ดูร้านค้าการ์ตูนแข่งกันขายโรบัสต้าให้คุณหมี แล้วดูว่าใครขายได้ ใครได้คะแนนเท่าไร</p></div>
+      <span class="tag grape" id="stepTag">ตอนที่ 1/10</span>
+    </header>
+    <div class="stage" id="storyStage" aria-live="polite"></div>
+    <div class="caption" id="caption"><h2 id="capTitle"></h2><p id="capText"></p><div id="capExtra"></div></div>
+    <div class="storybar">
+      <button class="btn ghost" id="prevBtn">◀ ย้อน</button>
+      <div class="dots" id="dots"></div>
+      <button class="btn dark" id="playBtn">⏵ เล่นอัตโนมัติ</button>
+      <button class="btn go" id="nextBtn">ถัดไป ▶</button>
+    </div>
+  </section>
+
+  <section class="panel" id="sandbox">
+    <header><div><h2>🎮 ลองตั้งราคาเอง</h2><p class="muted small">เลือกสถานการณ์ ตั้งราคากับจำนวน แล้วกดส่ง ดูว่าคุณหมีจะซื้อจากใคร ร้านอื่นเป็นบอทที่ตั้งราคาแบบสุ่ม</p></div></header>
+    <div class="sb-controls">
+      <div class="field"><label for="sbScen">สถานการณ์</label>
+        <select id="sbScen">
+          <option value="normal">ตลาดปกติ</option>
+          <option value="undercut">คู่แข่งตัดราคา</option>
+          <option value="none">ไม่มีคู่แข่ง</option>
+          <option value="bigdemand">คุณหมีอยากได้เยอะ</option>
+        </select></div>
+      <div class="field"><label for="sbGrade">เกรดโรบัสต้า</label><select id="sbGrade"></select></div>
+      <div class="field"><label>จำนวนที่ขาย</label>
+        <div class="stepper"><button type="button" id="sbMinus" aria-label="ลด">−</button><input id="sbQty" type="number" min="1" max="5" value="2" aria-label="จำนวน"><button type="button" id="sbPlus" aria-label="เพิ่ม">+</button></div></div>
+      <div class="field sb-price"><label for="sbPrice">ราคาของคุณ <b id="sbPriceTxt"></b></label>
+        <input type="range" id="sbPrice" min="80" max="160" step="5" value="120">
+        <div class="mood" id="sbMood"></div></div>
+    </div>
+    <div class="btnrow"><button class="btn go big" id="sbGo">ส่งราคา ▶</button><button class="btn ghost" id="sbReroll">🎲 สุ่มคู่แข่งใหม่</button></div>
+    <div class="stage" id="sbStage"></div>
+    <div class="sb-result" id="sbResult"></div>
+    <div id="sbHistory"></div>
+  </section>
+</div>
+<script src="/static/tutorial.js"></script>
+</body>
+</html>

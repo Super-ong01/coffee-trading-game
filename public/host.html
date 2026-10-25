@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ผู้จัด · Coffee Trading Game</title>
+<link rel="stylesheet" href="/static/style.css">
+<style>
+  .hosttimer{font-family:var(--f-num);font-size:clamp(3.5rem,11vw,7rem);font-weight:600;line-height:1;background:var(--grass);color:#fff;border:3px solid var(--ink);border-radius:28px;padding:10px 28px;box-shadow:0 7px 0 var(--ink)}
+  .hosttimer.low{background:var(--berry);animation:pulse 1s infinite}
+  .status-chip{display:inline-flex;gap:6px;align-items:center;padding:8px 14px;border-radius:999px;border:2px solid var(--ink);font-size:1rem;background:var(--cream)}
+  .status-chip.ok{background:var(--grass-soft)}
+  .confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="in">
+    <div class="brand"><i>☕</i>ร้านกาแฟ · หน้าผู้จัด</div>
+    <div class="stat"><span class="ic">🚩</span><b id="hRound">-</b><span>รอบ</span></div>
+    <div class="stat"><span class="ic">🎲</span><b id="hPhase">-</b></div>
+    <div class="spacer"></div>
+    <a class="guidebtn" href="/tutorial" target="_blank" rel="noopener" style="text-decoration:none;background:var(--sun);color:var(--ink)">🎬 อนิเมชันวิธีเล่น</a>
+    <a class="guidebtn" href="/guide?role=host" target="_blank" rel="noopener" style="text-decoration:none;background:var(--paper);color:var(--ink)">🖥️ คู่มือขึ้นจอ</a>
+    <button class="guidebtn" id="guideBtn" type="button">📖 คู่มือ</button>
+    <div id="hDots"></div>
+    <div class="timer" id="hTimer">--:--</div>
+  </div>
+</div>
+<div class="wrap" id="hostMain"></div>
+<script src="/static/common.js"></script>
+<script src="/static/guide.js"></script>
+<script src="/static/host.js"></script>
+</body>
+</html>

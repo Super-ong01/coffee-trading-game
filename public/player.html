@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ร้านกาแฟของฉัน · Coffee Trading Game</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="topbar hidden" id="topbar">
+  <div class="in">
+    <div class="brand"><i>☕</i><span id="tbTeam">ทีม</span></div>
+    <div class="stat"><span class="ic">🚩</span><b id="tbRound">-</b><span>รอบ</span></div>
+    <div class="stat"><span class="ic">⭐</span><b id="tbScore">0</b><span>คะแนน</span></div>
+    <div class="stat"><span class="ic">🏆</span><b id="tbRank">-</b><span>อันดับ</span></div>
+    <div class="stat"><span class="ic">🛍️</span><b id="tbStock">-</b><span>กระสอบ</span></div>
+    <div class="spacer"></div>
+    <button class="guidebtn" id="guideBtn" type="button" aria-label="คู่มือวิธีเล่น">📖<span> คู่มือ</span></button>
+    <div id="tbDots"></div>
+    <div class="timer idle" id="tbTimer">--:--</div>
+  </div>
+  <div class="timebar hidden" id="timebar"><i id="timebarFill"></i></div>
+</div>
+
+<!-- JOIN -->
+<div class="center hidden" id="joinView">
+  <form class="joincard" id="joinForm">
+    <div class="logo">☕🛍️</div>
+    <h1>มาขายเมล็ดกาแฟกัน!</h1>
+    <p class="muted">ตั้งชื่อร้านของคุณ แล้วรอคุณครูหรือผู้จัดกดเริ่มเกม</p>
+    <input id="joinName" maxlength="24" autocomplete="off" required placeholder="ชื่อทีม เช่น ทีมดอยสุเทพ" aria-label="ชื่อทีม">
+    <button class="btn huge go" type="submit">เข้าร่วมเกม ▶</button>
+    <p class="err small" id="joinErr"></p>
+    <p class="muted small" id="joinSeats"></p>
+    <div class="btnrow" style="justify-content:center"><a class="btn dark" href="/tutorial" target="_blank" rel="noopener">🎬 ดูวิธีเล่นแบบอนิเมชัน</a><button class="btn ghost" type="button" id="joinGuide">📖 คู่มือแบบอ่าน</button></div>
+  </form>
+</div>
+
+<!-- GAME -->
+<div class="wrap hidden" id="gameView">
+  <div id="main"></div>
+
+  <nav class="tabs" role="tablist" id="tabs">
+    <button role="tab" data-tab="ai" aria-selected="true">🤖 หุ่นยนต์ช่วยคิด</button>
+    <button role="tab" data-tab="copy" aria-selected="false">📋 คัดลอกข้อมูลให้ AI</button>
+    <button role="tab" data-tab="history" aria-selected="false">📒 ประวัติของฉัน</button>
+    <button role="tab" data-tab="board" aria-selected="false">🏆 อันดับ</button>
+    <button role="tab" data-tab="rules" aria-selected="false">📖 คู่มือวิธีเล่น</button>
+  </nav>
+
+  <section id="tab-ai" class="panel">
+    <header>
+      <div class="robot"><div class="avatar">🤖</div><div><h2>หุ่นยนต์ช่วยคิดราคา</h2><p class="muted small">ดูจากผลรอบก่อนๆ แล้วบอกว่าราคาไหนน่าจะขายได้และได้คะแนนดี (ใช้สถิติและทฤษฎีการเงิน ไม่ต้องใช้เน็ต)</p></div></div>
+    </header>
+    <div class="btnrow">
+      <div class="seg" id="profileSeg">
+        <button data-p="conservative" aria-pressed="false">🐢 ปลอดภัย</button>
+        <button data-p="balanced" aria-pressed="true">⚖️ พอดีๆ</button>
+        <button data-p="aggressive" aria-pressed="false">🚀 กล้าเสี่ยง</button>
+      </div>
+      <button class="btn dark" id="adviseBtn">ให้หุ่นยนต์คิดให้</button>
+    </div>
+    <div id="adviceOut"><p class="muted small">เลือกนิสัยการเล่น แล้วกด "ให้หุ่นยนต์คิดให้"</p></div>
+  </section>
+
+  <section id="tab-copy" class="panel hidden">
+    <header><div><h2>📋 คัดลอกข้อมูลไปถาม AI</h2><p class="muted small">รวมกติกา สต๊อก ผลทุกรอบ และอันดับไว้ให้ครบ เอาไปวางใน Claude หรือ ChatGPT แล้วถามว่ารอบหน้าควรขายเท่าไร</p></div></header>
+    <div class="btnrow"><button class="btn go big" id="copyBtn">คัดลอกข้อมูล</button><button class="btn ghost" id="refreshSummary">สร้างใหม่</button></div>
+    <textarea id="summaryBox" rows="12" readonly placeholder="กด คัดลอกข้อมูล"></textarea>
+    <p class="muted small">ถ้ากดคัดลอกแล้วไม่ได้ ให้กดค้างในกล่องข้อความ เลือกทั้งหมด แล้วคัดลอกเอง</p>
+  </section>
+
+  <section id="tab-history" class="panel hidden"></section>
+  <section id="tab-board" class="panel hidden"></section>
+  <section id="tab-rules" class="panel hidden"></section>
+</div>
+
+<div class="submitbar hidden" id="submitBar">
+  <div class="in">
+    <div class="msg" id="submitMsg"></div>
+    <button class="btn ghost big" id="skipBtn">😴 ไม่ขายรอบนี้</button>
+    <button class="btn go big" id="sendBtn">ส่งราคา ✔</button>
+  </div>
+</div>
+
+<script src="/static/common.js"></script>
+<script src="/static/guide.js"></script>
+<script src="/static/player.js"></script>
+</body>
+</html>

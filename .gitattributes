@@ -1,0 +1,6 @@
+# ให้ Git จัดการปลายบรรทัดเอง ไม่ต้องเตือน LF/CRLF
+* text=auto eol=lf
+# ไฟล์ .bat ของ Windows ต้องเป็น CRLF ไม่งั้นเปิดแล้ว error
+*.bat text eol=crlf
+*.woff2 binary
+*.png binary

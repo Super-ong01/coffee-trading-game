@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>คู่มือวิธีเล่น · Coffee Trading Game</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="topbar"><div class="in"><div class="brand"><i>☕</i>คู่มือวิธีเล่น · เกมขายเมล็ดกาแฟ</div><div class="spacer"></div><a class="guidebtn" href="/tutorial" style="text-decoration:none;background:var(--sun);color:var(--ink)">🎬 แบบอนิเมชัน</a> <a class="guidebtn" href="/" style="text-decoration:none">▶ ไปหน้าเล่นเกม</a></div></div>
+<div class="wrap" id="guideRoot"><p class="muted">กำลังโหลด…</p></div>
+<script src="/static/guide.js"></script>
+<script>
+  (async function () {
+    let cfg = null;
+    try { cfg = await (await fetch('/api/config')).json(); } catch (e) { /* ใช้ค่าเริ่มต้น */ }
+    const role = new URLSearchParams(location.search).get('role') === 'host' ? 'host' : 'player';
+    document.getElementById('guideRoot').innerHTML = window.CGGuide.render(cfg, role);
+  })();
+</script>
+</body>
+</html>
