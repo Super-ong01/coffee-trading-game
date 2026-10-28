@@ -1,6 +1,6 @@
 'use strict';
 // สร้างข้อความสรุปสำหรับ "คัดลอกไปให้ AI" (Claude, ChatGPT ฯลฯ)
-const { publicHistory } = require('./market');
+const { publicHistory, gradeTrend } = require('./market');
 const { leaderboard, currentBuyers, REASON_TH } = require('./game');
 const { advise } = require('./advisor');
 
@@ -74,6 +74,16 @@ function buildSummary(game, teamId) {
     }
   }
   L.push('');
+  if (rows.length && cfg.revealLevel !== 'self') {
+    L.push('## แนวโน้มราคาที่ขายได้ของแต่ละเกรด (รวมผู้ซื้อทุกรายของเกรดนั้นในรอบเดียวกัน)');
+    L.push('| เกรด | รอบ | ราคากลาง | ต้องการ | ขายได้ | ถูกสุด% | ถูกสุด฿ | เฉลี่ย% | แพงสุด% | แพงสุด฿ |');
+    L.push('|---|---|---|---|---|---|---|---|---|---|');
+    for (const t of gradeTrend(rows)) {
+      const baht = (p) => (p == null ? '-' : Math.round((t.ref * p) / 100));
+      L.push(`| ${t.skuName} | ${t.round} | ${t.ref} | ${t.demand} | ${t.sold} | ${f(t.min)} | ${baht(t.min)} | ${f(t.avg)} | ${f(t.max)} | ${baht(t.max)} |`);
+    }
+    L.push('');
+  }
   L.push('## ประวัติข้อเสนอของฉัน');
   const my = rows.filter((r) => r.mine);
   if (!my.length) L.push('- ยังไม่เคยเสนอขาย');

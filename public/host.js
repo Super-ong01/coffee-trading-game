@@ -235,12 +235,14 @@
     ${series.length ? `<section class="panel"><header><h2>คะแนนสะสมของคนจริง</h2></header>
       <div class="legend">${series.map((s) => `<span><i style="background:${s.color}"></i>${esc(s.name)}</span>`).join('')}</div>
       ${lineChart(series, { h: 240 })}</section>` : ''}
+    <section class="panel"><header><div><h2>📈 แนวโน้มราคาแต่ละเกรด</h2><p class="muted small">ถูกสุด / เฉลี่ย / แพงสุดที่ขายได้ในแต่ละรอบ (ผู้จัดเห็นข้อมูลระดับช่วงราคาเสมอ)</p></div></header><div id="hostTrend"></div></section>
     ${boardHTML(ended ? 0 : 15)}
     <section class="panel"><header><h2>จัดการเกม</h2></header>
       <div class="confirm" id="resetBox"><button class="btn ghost" id="resetBtn">เริ่มเกมใหม่ (ใช้การตั้งค่าเดิม)</button></div>
       <p class="muted small">เกมถูกบันทึกอัตโนมัติในโฟลเดอร์ data ถ้าปิดเซิร์ฟเวอร์แล้วเปิดใหม่จะเล่นต่อจากเดิม</p></section>`;
   }
   function bindResults() {
+    window.CGTrend.mount($('#hostTrend'), view.history, { ...view.config, revealLevel: 'range' }, { rounds: view.rounds, openAll: true });
     const nb = $('#nextBtn');
     if (nb) nb.addEventListener('click', () => host('next'));
     $('#resetBtn').addEventListener('click', () => {

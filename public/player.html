@@ -45,6 +45,7 @@
     <button role="tab" data-tab="ai" aria-selected="true">🤖 หุ่นยนต์ช่วยคิด</button>
     <button role="tab" data-tab="copy" aria-selected="false">📋 คัดลอกข้อมูลให้ AI</button>
     <button role="tab" data-tab="history" aria-selected="false">📒 ประวัติของฉัน</button>
+    <button role="tab" data-tab="trend" aria-selected="false">📈 ราคาตลาด</button>
     <button role="tab" data-tab="board" aria-selected="false">🏆 อันดับ</button>
     <button role="tab" data-tab="rules" aria-selected="false">📖 คู่มือวิธีเล่น</button>
   </nav>
@@ -72,6 +73,10 @@
   </section>
 
   <section id="tab-history" class="panel hidden"></section>
+  <section id="tab-trend" class="panel hidden">
+    <header><div><h2>📈 แนวโน้มราคาแต่ละเกรด</h2><p class="muted small">ราคาถูกสุดและแพงสุดที่ขายได้จริงในแต่ละรอบ กดเลือกเกรดด้านล่าง</p></div></header>
+    <div class="tr-body"></div>
+  </section>
   <section id="tab-board" class="panel hidden"></section>
   <section id="tab-rules" class="panel hidden"></section>
 </div>
@@ -86,6 +91,7 @@
 
 <script src="/static/common.js"></script>
 <script src="/static/guide.js"></script>
+<script src="/static/trend.js"></script>
 <script src="/static/player.js"></script>
 </body>
 </html>

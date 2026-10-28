@@ -375,6 +375,7 @@ function hostView(game, now = Date.now()) {
     lastResult: game.results.length ? summarizeResultForHost(game.results[game.results.length - 1]) : null,
     leaderboard: lb.map((r) => ({ ...r, style: r.type === 'bot' ? BOT_STYLE_TH[game.teams.find((t) => t.id === r.teamId).botStyle] : null })),
     roundScores: roundScoreSeries(game),
+    history: publicHistory(game, null, 'range'),
   };
 }
 

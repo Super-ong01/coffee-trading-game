@@ -409,7 +409,7 @@
               <span class="small">${esc(REASON_KID[o.reason] || o.reasonText)}</span>${tip}</div>
             <div class="res">${st === 'sold' ? '✅' : st === 'partial' ? '🟡' : '❌'}</div></div>`;
         }).join('')}</div>` : ''}
-      <div class="btnrow"><button class="btn go big" id="quickCopy">📋 คัดลอกข้อมูลให้ AI</button><button class="btn dark big" id="quickAdvise">🤖 ถามหุ่นยนต์ช่วยคิด</button></div>
+      <div class="btnrow"><button class="btn go big" id="quickCopy">📋 คัดลอกข้อมูลให้ AI</button><button class="btn dark big" id="quickAdvise">🤖 ถามหุ่นยนต์ช่วยคิด</button><button class="btn big" id="quickTrend">📈 ดูแนวโน้มราคา</button></div>
       <div class="panel">
         <header><h2>🛒 ตลาดรอบนี้เป็นยังไง</h2><span class="tag mut">${esc(REVEAL_TH[v.config.revealLevel])}</span></header>
         <div class="tablewrap"><table><thead><tr><th>ผู้ซื้อ</th><th>อยากได้</th><th class="n">ต้องการ</th><th class="n">ซื้อได้</th><th class="n">ร้านที่เสนอ</th>${showRange ? '<th class="n">ถูกสุด</th><th class="n">แพงสุดที่ขายได้</th>' : ''}</tr></thead><tbody>
@@ -420,6 +420,7 @@
       </div>`;
     $('#quickCopy').addEventListener('click', async () => { selectTab('copy'); await makeSummary(true); });
     $('#quickAdvise').addEventListener('click', () => { selectTab('ai'); runAdvice(); });
+    $('#quickTrend').addEventListener('click', () => selectTab('trend'));
     const ck = v.phase + v.round;
     if (celebrated !== ck && ((lr && lr.delta > 0) || (ended && v.team.rank <= 3))) { celebrated = ck; confetti(); }
   }
@@ -429,7 +430,7 @@
   function selectTab(t) {
     currentTab = t;
     $$('#tabs button').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === t)));
-    ['ai', 'copy', 'history', 'board', 'rules'].forEach((k) => $('#tab-' + k).classList.toggle('hidden', k !== t));
+    ['ai', 'copy', 'history', 'trend', 'board', 'rules'].forEach((k) => $('#tab-' + k).classList.toggle('hidden', k !== t));
     renderTab(t);
     $('#tabs').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -439,6 +440,7 @@
     if (!view) return;
     if (t === 'history') renderHistory();
     if (t === 'board') renderBoard();
+    if (t === 'trend') window.CGTrend.mount($('#tab-trend .tr-body'), view.history, view.config, { rounds: view.rounds, prefer: Object.keys(view.team.stock).filter((k) => view.team.stock[k] > 0) });
     if (t === 'rules') renderRules();
   }
 

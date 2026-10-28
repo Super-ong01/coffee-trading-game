@@ -223,3 +223,20 @@ test('ค่าเริ่มต้น: โรบัสต้าชนิดเ
   for (const b of g.buyers.flat()) assert.match(b.sku, /^ROB-[A-G]$/);
   assert.equal(g.phase, 'ended');
 });
+
+test('แนวโน้มราคาต่อเกรด: ถูกสุด ≤ เฉลี่ย ≤ แพงสุด และไม่เกินเพดาน', () => {
+  const { gradeTrend } = require('../engine/market');
+  const g = fullGame('trend', simpleHuman);
+  const rows = publicHistory(g, null, 'range');
+  const t = gradeTrend(rows);
+  assert.ok(t.length > 0);
+  for (const x of t) {
+    assert.ok(x.sold <= x.demand);
+    if (x.min != null) {
+      assert.ok(x.min <= x.avg + 1e-9 && x.avg <= x.max + 1e-9, JSON.stringify(x));
+      assert.ok(x.max <= g.config.priceCapPct);
+    }
+  }
+  const txt = buildSummary(g, g.teams.find((t) => t.name === 'A').id);
+  assert.ok(txt.includes('## แนวโน้มราคาที่ขายได้ของแต่ละเกรด'));
+});

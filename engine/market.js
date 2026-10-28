@@ -87,4 +87,19 @@ function ewmaClearing(obsBySku, lambda = 0.6) {
   return out;
 }
 
-module.exports = { publicBuyer, publicHistory, clearingObservations, ewmaClearing, pct };
+/** รวมราคาที่ขายได้ต่อเกรดต่อรอบ: ถูกสุด / แพงสุด / เฉลี่ยถ่วงน้ำหนัก (ใช้ใน "คัดลอกข้อมูลให้ AI") */
+function gradeTrend(rows) {
+  const out = {};
+  for (const r of rows) {
+    const k = r.sku + '|' + r.round;
+    const x = out[k] || (out[k] = { sku: r.sku, skuName: r.skuName, ref: r.ref, round: r.round, buyers: 0, demand: 0, sold: 0, min: null, max: null, wsum: 0 });
+    x.buyers++; x.demand += r.demand; x.sold += r.soldQty;
+    if (r.minSoldPct != null) x.min = x.min == null ? r.minSoldPct : Math.min(x.min, r.minSoldPct);
+    if (r.maxSoldPct != null) x.max = x.max == null ? r.maxSoldPct : Math.max(x.max, r.maxSoldPct);
+    if (r.avgSoldPct != null) x.wsum += r.avgSoldPct * r.soldQty;
+  }
+  return Object.values(out).map((x) => ({ ...x, avg: x.sold && x.wsum ? Math.round((x.wsum / x.sold) * 10) / 10 : null }))
+    .sort((a, b) => (a.sku < b.sku ? -1 : a.sku > b.sku ? 1 : a.round - b.round));
+}
+
+module.exports = { gradeTrend, publicBuyer, publicHistory, clearingObservations, ewmaClearing, pct };

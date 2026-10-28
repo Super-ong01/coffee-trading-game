@@ -260,3 +260,17 @@ svg text{fill:var(--muted);font-family:var(--f-num);font-size:10px}
 .g-anim:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
 @media (max-width:640px){.g-head h1{font-size:1.1rem}.g-head .btn{padding:6px 10px;font-size:.85rem}}
 @media (max-width:640px){.g-head .btn.dark{display:none}}
+
+/* แนวโน้มราคา */
+.tr-chips{display:flex;gap:8px;flex-wrap:wrap}
+.tr-chips button{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 12px 4px 5px;box-shadow:0 3px 0 var(--ink)}
+.tr-chips button.on{background:var(--sun);transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.tr-chips button:disabled{opacity:.4;box-shadow:none}
+.tr-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px}
+.tr-unit button{padding:5px 12px;font-size:.85rem}
+.tr-kpis .kpi b{font-size:1.25rem}
+.tr-chart{background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px;overflow-x:auto}
+.tr-chart svg{min-width:520px}
+.tr-all{border:2px dashed var(--line);border-radius:14px;padding:8px 12px}
+.tr-all summary{cursor:pointer}
+@media (max-width:640px){.tr-chart svg{min-width:600px}}
